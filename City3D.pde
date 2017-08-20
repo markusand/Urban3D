@@ -8,8 +8,8 @@ public class City3D {
     private ArrayList<Building3D> buildings;
     
     private PVector lastKnownPos;
-    private PVector rotationTarget;
-    private PVector rotationCenter;
+    private PVector centerTarget;
+    private PVector centerPoint;
     private float lastKnownRotation = 0;
     private float lastKnownScale = 1;
     private PGraphics canvas;
@@ -20,8 +20,8 @@ public class City3D {
         HEIGHT = height;
         
         lastKnownPos = new PVector(parent.width/2, parent.height/2);
-        rotationCenter = new PVector(WIDTH/2, HEIGHT/2);
-        rotationTarget = new PVector(WIDTH/2, HEIGHT/2);
+        centerPoint = new PVector(WIDTH/2, HEIGHT/2);
+        centerTarget = new PVector(WIDTH/2, HEIGHT/2);
         canvas = createGraphics(parent.width, parent.height, P3D);
     }
     
@@ -57,8 +57,8 @@ public class City3D {
     
     
     public void draw() {
-        if(rotationCenter.dist(rotationTarget) > 1) {
-            rotationCenter.lerp(rotationTarget, 0.5);
+        if(centerPoint.dist(centerTarget) > 1) {
+            centerPoint.lerp(centerTarget, 0.5);
             update();
         }
         image(canvas, 0, 0);    
@@ -83,7 +83,7 @@ public class City3D {
         canvas.rotateX(QUARTER_PI);
         canvas.rotateZ(lastKnownRotation);
         canvas.scale(lastKnownScale);
-        canvas.translate(-rotationCenter.x, -rotationCenter.y, 0);
+        canvas.translate(-centerPoint.x, -centerPoint.y, 0);
         for(Building3D building : buildings) {
             building.draw(canvas);
         }
@@ -93,7 +93,19 @@ public class City3D {
     
     
     public void rotate(float rotation) {
-        lastKnownRotation = rotation;
+        lastKnownRotation += rotation;
+        update();
+    }
+    
+    
+    public void move(float dX, float dY) {
+        PVector mov = new PVector(dX, dY).rotate(-lastKnownRotation);
+        centerTarget.add(mov);
+    }
+    
+    
+    public void zoom(float dScale) {
+        lastKnownScale += dScale;
         update();
     }
     
@@ -135,11 +147,11 @@ public class City3D {
     
     
     public void centerAt(int i) {
-        if(i == -1) rotationTarget = new PVector(WIDTH/2, HEIGHT/2);
+        if(i == -1) centerTarget = new PVector(WIDTH/2, HEIGHT/2);
         else {
             for(Building3D building : buildings) {
                 if(building.ID == i) {
-                    rotationTarget = building.getCentroid();
+                    centerTarget = building.getCentroid();
                     break;
                 }
             }
@@ -157,7 +169,7 @@ public class City3D {
         pickMap.rotateX(QUARTER_PI);
         pickMap.rotateZ(lastKnownRotation);
         pickMap.scale(lastKnownScale);
-        pickMap.translate(-rotationCenter.x, -rotationCenter.y, 0);
+        pickMap.translate(-centerPoint.x, -centerPoint.y, 0);
         for(Building3D building : buildings) {
             if(building instanceof Pickable) building.drawForPicking(pickMap);
         }
