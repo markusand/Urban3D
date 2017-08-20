@@ -28,17 +28,21 @@ public class City3D {
         canvas = createGraphics(parent.width, parent.height, P3D);
     }
     
-    public City3D(PApplet parent, String pathGIS, int width, int height) {
+    public City3D(PApplet parent, int width, int height, String pathGIS, Projection proj) {
         this(parent, width, height);
-        load(pathGIS);
+        load(pathGIS, proj);
     }
     
     
-    public void load(String pathGIS) {
+    public void load(String pathGIS, Projection proj) {
         
         GeoMap geoMap = new GeoMap(0, 0, WIDTH, HEIGHT, PARENT);
         geoMap.readFile(pathGIS);
         Table attributes = geoMap.getAttributeTable();
+        
+        float dY = geoMap.getMaxGeoY() - geoMap.getMinGeoY();
+        if(proj == Projection.EPSG4326) dY *= 111320;
+        LandArea.px_m = HEIGHT / dY;
         
         buildings = new ArrayList();
         for(int i = 0; i < geoMap.getNumPolys(); i++) {

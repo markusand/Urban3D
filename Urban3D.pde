@@ -4,13 +4,15 @@ import java.util.TreeMap;
 
 City3D city;
 
+public enum Projection { EPSG4326, EPSG3857 };
+
 void setup() {
 
     //size(1200,800,P3D);
     size(1200,805,P3D);
     //pixelDensity(2);
     
-    city = new City3D(this, "gis/buildings_simplified", width, height);
+    city = new City3D(this, width, height, "gis/buildings_EPSG3857", Projection.EPSG3857);
     city.paint(#37383a);
     
     city.update(width/2, height/2, 0, 3);

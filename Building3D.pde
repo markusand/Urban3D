@@ -4,7 +4,9 @@ public interface Pickable {
 }
 
 
-public abstract class LandArea {
+public static abstract class LandArea {
+    
+    public static float px_m;
     
     protected final int ID;
     protected final TableRow ATTRIBUTES;
@@ -35,7 +37,7 @@ public class Building3D extends LandArea implements Pickable {
     
     public Building3D(int id, TableRow attributes, PVector[] contour) {
         super(id, attributes, contour);
-        extrude( ATTRIBUTES.getInt("Floors") * 2 );
+        extrude( ATTRIBUTES.getInt("Floors") * 3 * px_m );
         PICK_COLOR = getPicker(id);
     }
 
@@ -45,7 +47,7 @@ public class Building3D extends LandArea implements Pickable {
     }
     
 
-    public void extrude(int h) {
+    public void extrude(float h) {
         extrusion = createShape(GROUP);
         
         // Build sides
