@@ -1,7 +1,6 @@
 import org.gicentre.geomap.*;
 import java.util.TreeMap;
 
-PImage orto;
 
 City3D city;
 
@@ -24,15 +23,22 @@ void draw() {
 
     city.draw();
  
-    fill(0);
+    fill(#FFFFFF);
     text(frameRate, 20, 20);
+
+}
+
+void mouseDragged() {
+    float dX = pmouseX - mouseX;
+    city.rotate(map(dX, 0, width, 0, TWO_PI));
+}
 
 void mouseClicked() {
     int i = city.pick(mouseX, mouseY);
-    //city.highlight(i, #E40205);
-    city.highlight(i, #00FF00);
+    city.highlight(i, #00FF00);    // #E40205
     city.centerAt(i);
 }
+
 void keyPressed() {
     switch(key) {
         case '+':
