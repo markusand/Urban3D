@@ -37,7 +37,7 @@ public class Building3D extends LandArea implements Pickable {
     
     public Building3D(int id, TableRow attributes, PVector[] contour) {
         super(id, attributes, contour);
-        extrude( ATTRIBUTES.getInt("Floors") * 3 * px_m );
+        extrude(ATTRIBUTES.getInt("elev") * px_m, ATTRIBUTES.getInt("height_mam") * px_m );
         PICK_COLOR = getPicker(id);
     }
 
@@ -47,17 +47,17 @@ public class Building3D extends LandArea implements Pickable {
     }
     
 
-    public void extrude(float h) {
+    public void extrude(float base, float h) {
         extrusion = createShape(GROUP);
         
         // Build sides
         for(int i = 1; i < CONTOUR.length; i++) {
             PShape side = createShape();
             side.beginShape();
-            side.vertex(CONTOUR[i-1].x, CONTOUR[i-1].y, 0);
-            side.vertex(CONTOUR[i-1].x, CONTOUR[i-1].y, h);
-            side.vertex(CONTOUR[i].x, CONTOUR[i].y, h);
-            side.vertex(CONTOUR[i].x, CONTOUR[i].y, 0);
+            side.vertex(CONTOUR[i-1].x, CONTOUR[i-1].y, base);
+            side.vertex(CONTOUR[i-1].x, CONTOUR[i-1].y, base + h);
+            side.vertex(CONTOUR[i].x, CONTOUR[i].y, base + h);
+            side.vertex(CONTOUR[i].x, CONTOUR[i].y, base);
             side.endShape(CLOSE);
             extrusion.addChild(side);
         }
@@ -66,10 +66,10 @@ public class Building3D extends LandArea implements Pickable {
         int last = CONTOUR.length-1;
         PShape side = createShape();
         side.beginShape();
-        side.vertex(CONTOUR[0].x, CONTOUR[0].y, 0);
-        side.vertex(CONTOUR[0].x, CONTOUR[0].y, h);
-        side.vertex(CONTOUR[last].x, CONTOUR[last].y, h);
-        side.vertex(CONTOUR[last].x, CONTOUR[last].y, 0);
+        side.vertex(CONTOUR[0].x, CONTOUR[0].y, base);
+        side.vertex(CONTOUR[0].x, CONTOUR[0].y, base + h);
+        side.vertex(CONTOUR[last].x, CONTOUR[last].y, base + h);
+        side.vertex(CONTOUR[last].x, CONTOUR[last].y, base);
         side.endShape(CLOSE);
         extrusion.addChild(side);
         
@@ -77,7 +77,7 @@ public class Building3D extends LandArea implements Pickable {
         PShape cover = createShape();
         cover.beginShape();
         for(int i = 0; i <= last; i++) {
-            cover.vertex(CONTOUR[i].x, CONTOUR[i].y, h);
+            cover.vertex(CONTOUR[i].x, CONTOUR[i].y, base + h);
         }
         cover.endShape(CLOSE);
         extrusion.addChild(cover);
