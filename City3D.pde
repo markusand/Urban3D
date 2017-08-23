@@ -142,22 +142,10 @@ public class City3D {
     }
     
     
-    public void lerpPaint(String column, TreeMap<Float, Integer> colors) {
-        float min = colors.firstKey();
-        float max = colors.lastKey();
+    public void paint(ColorSchema sch) {
         for(Building3D building : buildings) {
-            float value = building.ATTRIBUTES.getFloat(column);
-            if(value >= min && value <= max) {
-                color fillColor;
-                if(colors.containsKey(value)) fillColor = colors.get(value);
-                else {
-                    float prev = colors.lowerKey(value);
-                    float next = colors.higherKey(value);
-                    float normValue = map(value, prev, next, 0, 1);
-                    fillColor = lerpColor(colors.get(prev), colors.get(next), normValue);
-                }
-                building.setColor(fillColor);
-            }
+            float value = building.ATTRIBUTES.getFloat(sch.ATTRIBUTE);
+            building.setColor( sch.getColor(value) );
         }
     }
     
