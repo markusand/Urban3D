@@ -3,7 +3,7 @@ import org.gicentre.geomap.*;
 City3D city;
 
 ArrayList<ColorSchema> colors = new ArrayList();
-int it;
+int it = -1;
 
 public enum Projection { EPSG4326, EPSG3857 };
 
@@ -65,7 +65,8 @@ void draw() {
     city.draw();
  
     fill(#FFFFFF);
-    text(frameRate, 20, 20);
+    if(it != -1) colors.get(it).drawLegend(40,40, 200);
+    //text(frameRate, 20, 20);
 
 }
 
