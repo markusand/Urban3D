@@ -10,7 +10,10 @@ public enum Projection { EPSG4326, EPSG3857 };
 void setup() {
 
     size(1200,805,P3D);
-    pixelDensity(2);
+    
+    // CAUTION! Bug: Picker not working with pixelDensity(2).
+    // Keep commented until fixed
+    //pixelDensity(2); 
     
     city = new City3D(this, width, height, "gis/buildings", Projection.EPSG3857);
     city.paint(#37383a);
