@@ -13,7 +13,12 @@ void setup() {
     //pixelDensity(2);
     
     city = new City3D(this, width, height, "gis/buildings_EPSG3857", Projection.EPSG3857);
-    city.paint(#37383a);
+    //city.paint(#37383a);
+    TreeMap<Float, Integer> floorColor = new TreeMap();
+    floorColor.put(10f, #00FF00);
+    floorColor.put(100f, #f0cb35);
+    floorColor.put(313f, #C02425);
+    city.lerpPaint("elev",floorColor);
     
     city.update(width/2, height/2, 0, 3);
 }
