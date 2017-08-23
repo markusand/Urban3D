@@ -37,7 +37,7 @@ public class Building3D extends LandArea implements Pickable {
     
     public Building3D(int id, TableRow attributes, PVector[] contour) {
         super(id, attributes, contour);
-        extrude(ATTRIBUTES.getInt("elev") * px_m, ATTRIBUTES.getInt("height_mam") * px_m );
+        extrude(ATTRIBUTES.getInt("elevation") * px_m, ATTRIBUTES.getInt("height") * px_m );
         PICK_COLOR = getPicker(id);
     }
 
