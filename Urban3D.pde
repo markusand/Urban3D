@@ -18,29 +18,27 @@ void setup() {
     city = new City3D(this, width, height, "gis/buildings", Projection.EPSG3857);
     city.paint(#37383a);
     
-    ColorSchema sup = new ColorSchema("SUPERFÍCIE ÚTIL", "m2", "surf_use");
-    sup.addColor(0.1, #F0F0F0);
-    sup.addColor(4564, #FF0000);
-    colors.add(sup);
-    
-    ColorSchema ir = new ColorSchema("IRRADIACIÓ ÚTIL", "kWh/m2", "ir_use");
-    ir.addColor(500, #fff89e);
-    ir.addColor(1189, #FF6961);
+    ColorSchema ir = new ColorSchema("Irradiació Útil", "kWh/m2", "ir_use");
+    ir.addColor(0.1, #636bff);
+    ir.addColor(396, #70ff67);
+    ir.addColor(792, #fcf663);
+    ir.addColor(1189, #e24f4f);
     colors.add(ir);
     
-    ColorSchema pot = new ColorSchema("POTENCIA INSTAL·LABLE", "W", "pow_instal");
-    pot.addColor(0.1f, #FFFF00);
-    pot.addColor(672f, #FF0000);
+    ColorSchema pot = new ColorSchema("Potència Instal·lable", "W", "pow_instal");
+    pot.addColor(0.1, #fcf663);
+    pot.addColor(336, #e24f4f);
+    pot.addColor(672, #ff91f7);
     colors.add(pot);
     
-    ColorSchema elec = new ColorSchema("ELECTRICITAT GENERADA", "MWh", "electr_gen");
-    elec.addColor(0.1f, #FFFF00);
-    elec.addColor(672f, #FF0000);
+    ColorSchema elec = new ColorSchema("Electricitat Generada", "MWh", "electr_gen");
+    elec.addColor(0.1, #fcf663);
+    elec.addColor(672, #e24f4f);
     colors.add(elec);
     
-    ColorSchema co2 = new ColorSchema("ESTALVI CO2", "t CO2", "co2_saving");
+    ColorSchema co2 = new ColorSchema("Estalvi CO2", "t CO2", "co2_saving");
     co2.addColor(0.1, #d2e68d);
-    co2.addColor(2195f, #297d7d);
+    co2.addColor(2195, #297d7d);
     colors.add(co2);
     
     /*
@@ -106,6 +104,12 @@ void keyPressed() {
             }
             break;
         
+        case 'r':
+            it = -1;
+            city.paint(#37383a);
+            city.update();
+            break;
+            
         case ' ':
             it = (it + 1) % colors.size();
             city.paint( colors.get(it) );

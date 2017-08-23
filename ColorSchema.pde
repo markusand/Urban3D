@@ -7,7 +7,7 @@ public class ColorSchema {
     public final String UNIT;
     public final String ATTRIBUTE;
     
-    private color invalid = #F0F0F0;    // default invalid color
+    private color invalid = #37383a;    // default invalid color
     private TreeMap<Float, Integer> colors;
     
     public ColorSchema(String title, String unit, String attr) {
