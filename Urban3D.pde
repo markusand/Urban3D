@@ -68,10 +68,6 @@ void draw() {
 
 }
 
-void mouseDragged() {
-    float dX = pmouseX - mouseX;
-    city.rotate(map(dX, 0, width, 0, TWO_PI));
-}
 
 void mouseClicked() {
     int i = city.pick(mouseX, mouseY);
@@ -81,29 +77,6 @@ void mouseClicked() {
 
 void keyPressed() {
     switch(key) {
-        case '+':
-            city.zoom(1);
-            break;
-        case '-':
-            city.zoom(-1);
-            break;
-        case CODED:
-            switch(keyCode) {
-                case LEFT:
-                    city.move(-10, 0);
-                    break;
-                case RIGHT:
-                    city.move(10, 0);
-                    break;
-                case UP:
-                    city.move(0, -10);
-                    break;
-                case DOWN:
-                    city.move(0, 10);
-                    break;
-            }
-            break;
-        
         case 'r':
             it = -1;
             city.paint(#37383a);

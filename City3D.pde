@@ -7,6 +7,7 @@ public class City3D {
     
     private ArrayList<Building3D> buildings;
     
+    private boolean interactive = true;
     private PVector screenPos;
     private PVector centerTarget;
     private PVector centerPoint;
@@ -26,6 +27,9 @@ public class City3D {
         centerPoint = new PVector(WIDTH/2, HEIGHT/2);
         centerTarget = new PVector(WIDTH/2, HEIGHT/2);
         canvas = createGraphics(parent.width, parent.height, P3D);
+        
+        parent.registerMethod("mouseEvent", this);
+        parent.registerMethod("keyEvent", this);
     }
     
     public City3D(PApplet parent, int width, int height, String pathGIS, Projection proj) {
@@ -108,6 +112,11 @@ public class City3D {
         canvas.endDraw();
     }
     
+    
+    public void setInteractivity(boolean i) {
+        interactive = i;
+    }
+
     
     public void rotate(float rotation) {
         rotationTarget += rotation;
@@ -192,6 +201,48 @@ public class City3D {
             if(building instanceof Pickable && c  == building.PICK_COLOR) return building.ID;
         }
         return -1;
+    }
+    
+    
+    public void mouseEvent(MouseEvent e) {
+        if(!interactive) return;
+        switch(e.getAction()) {
+            case MouseEvent.DRAG:
+                float dX = pmouseX - mouseX;
+                city.rotate(map(dX, 0, width, 0, TWO_PI));
+                break;
+        }
+    }
+    
+    
+    public void keyEvent(KeyEvent e) {
+        if(!interactive) return;
+        if(e.getAction() == KeyEvent.PRESS) {
+            switch(e.getKey()) {
+                case '+':
+                    city.zoom(1);
+                    break;
+                case '-':
+                    city.zoom(-1);
+                    break;
+                case CODED:
+                    switch(keyCode) {
+                        case LEFT:
+                            city.move(-10, 0);
+                            break;
+                        case RIGHT:
+                            city.move(10, 0);
+                            break;
+                        case UP:
+                            city.move(0, -10);
+                            break;
+                        case DOWN:
+                            city.move(0, 10);
+                            break;
+                    }
+                    break;                
+            }
+        }
     }
     
 }
