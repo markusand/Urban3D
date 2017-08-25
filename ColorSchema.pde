@@ -43,31 +43,34 @@ public class ColorSchema {
     
     
     public void drawLegend(int x, int y, int w) {
+        float min = colors.firstKey();
+        float max = colors.lastKey();
         pushMatrix();
         pushStyle();
         translate(x, y);
+        fill(0, 170); noStroke();
+        rect(0, 0, w, 65, 5);
         fill(#FFFFFF);
-        textAlign(LEFT, BOTTOM); textSize(14);
-        text(TITLE, 0, 12);
-        textAlign(RIGHT, BOTTOM); textSize(12);
-        text(UNIT, w, 12);
-        
+        textAlign(LEFT, BOTTOM); textSize(16);
+        text(TITLE, 15, 27);
+        textAlign(RIGHT, BOTTOM); textSize(14);
+        text(UNIT, w - 15, 27);
         beginShape(QUAD_STRIP);
-        noStroke(); textSize(10);
         for(Entry<Float, Integer> c : colors.entrySet()) {
-            float xPos = map(c.getKey(), colors.firstKey(), colors.lastKey(), 0, w);
+            float xPos = map(c.getKey(), min, max, 15, w - 15);
             fill(c.getValue());
-            vertex(xPos, 15);
-            vertex(xPos, 25);
+            vertex(xPos, 30);
+            vertex(xPos, 40);
         }
         endShape();
-        
-        fill(#FFFFFF); textSize(9); textAlign(CENTER, TOP);
+        fill(#FFFFFF); textSize(11);
         for(Float v : colors.keySet()) {
-            float xPos = map(v, colors.firstKey(), colors.lastKey(), 0, w);
-            text(int(v), xPos, 28);
+            float xPos = map(v, min, max, 15, w-15);
+            if(v.equals(min)) textAlign(LEFT, TOP);
+            else if(v.equals(max)) textAlign(RIGHT, TOP);
+            else textAlign(CENTER, TOP);
+            text(int(v), xPos, 43);
         }
-        
         popStyle();
         popMatrix();
     }
