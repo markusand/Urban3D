@@ -1,5 +1,3 @@
-import org.gicentre.geomap.*;
-
 City3D city;
 
 ArrayList<ColorSchema> colors = new ArrayList();
@@ -72,18 +70,17 @@ void mouseClicked() {
     city.centerAt(i);
 }
 
+
 void keyPressed() {
     switch(key) {
         case 'r':
             it = -1;
             city.paint(#37383a);
-            city.update();
             break;
             
         case ' ':
             it = (it + 1) % colors.size();
             city.paint( colors.get(it) );
-            city.update();
             break;
     }
 }

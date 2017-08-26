@@ -1,4 +1,5 @@
 import java.util.TreeMap;
+import org.gicentre.geomap.*;
 
 public class City3D {
     
@@ -139,6 +140,7 @@ public class City3D {
         for(Building3D building : buildings) {
             building.setColor(c);
         }
+        update();
     }
     
     
@@ -148,6 +150,7 @@ public class City3D {
                 building.setColor(colors.get( building.ATTRIBUTES.getString(column)));
             }
         }
+        update();
     }
     
     
@@ -156,6 +159,7 @@ public class City3D {
             float value = building.ATTRIBUTES.getFloat(sch.ATTRIBUTE);
             building.setColor( sch.getColor(value) );
         }
+        update();
     }
     
     
@@ -164,6 +168,7 @@ public class City3D {
             if(building.ID == i) building.paint(fillColor);
             else building.paint();      
         }
+        update();
     }
     
     
@@ -177,7 +182,6 @@ public class City3D {
                 }
             }
         }
-        update();
     }
     
     
