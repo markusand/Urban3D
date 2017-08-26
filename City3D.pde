@@ -196,7 +196,7 @@ public class City3D {
         }
         pickMap.popMatrix();
         pickMap.endDraw();
-        int c = pickMap.get(x, y);
+        int c = pickMap.get(x * sketchPixelDensity(), y * sketchPixelDensity());
         for(Building3D building : buildings) {
             if(building instanceof Pickable && c  == building.PICK_COLOR) return building.ID;
         }
